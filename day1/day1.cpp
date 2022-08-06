@@ -1,17 +1,15 @@
 
+#include "day1.h"
 #include <iostream>
-#include <vector>
 #include <fstream>
 #include <numeric>
 
-using namespace std;
-int CountDepthIncrease(vector<int> vInput, const int Width = 1);
 
 void PrepareInput(vector<int>& vInput)
 {
     string Line{};
-    cout << "Opening file with input \"input1.txt" << endl;
-    ifstream Myfile("input1.txt");
+    cout << "Opening file with input \"input.txt\"" << endl;
+    ifstream Myfile("input.txt");
     if (Myfile.is_open())
     {
         while (getline(Myfile,Line))
@@ -37,7 +35,6 @@ int CountDepthIncrease(vector<int> vInput, const int Width)
         {
             ++Counter;
         }
-        cout << vInput.at(0) << endl;
         vInput.erase(vInput.begin());
         ValueA = ValueB;
     }
