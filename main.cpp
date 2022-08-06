@@ -2,8 +2,10 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <numeric>
 
 using namespace std;
+int CountDepthIncrease(vector<int> vInput, const int Width = 1);
 
 void PrepareInput(vector<int>& vInput)
 {
@@ -20,16 +22,26 @@ void PrepareInput(vector<int>& vInput)
   }
 }
 
-int CountDepthIncrease(const vector<int>& vInput)
+int CountDepthIncrease(vector<int> vInput, const int Width)
 {
-    int Counter{};
-    for (int i = 1; i < vInput.size(); ++i)
+    int Counter{},
+        ValueA{accumulate(vInput.begin(), vInput.begin() + Width, 0)},
+        ValueB{};
+        
+    vInput.erase(vInput.begin());
+
+    while (vInput.size() >= Width)
     {
-        if (vInput.at(i-1) < vInput.at(i))
+        ValueB = accumulate(vInput.begin(), vInput.begin() + Width, 0);
+        if (ValueA < ValueB)
         {
             ++Counter;
         }
+        cout << vInput.at(0) << endl;
+        vInput.erase(vInput.begin());
+        ValueA = ValueB;
     }
+
     return Counter;
 }
 
@@ -37,7 +49,8 @@ int main()
 {
     vector<int> mvInput{};
     PrepareInput(mvInput);
-    cout << "Depth increased " << CountDepthIncrease(mvInput) << " times" << endl;
+    cout << "Depth increased for single measurements " << CountDepthIncrease(mvInput) << " times" << endl;
+    cout << "Depth increased for sliding window sum measurements " << CountDepthIncrease(mvInput, 3) << " times" << endl;
 
     return 0;
 }
